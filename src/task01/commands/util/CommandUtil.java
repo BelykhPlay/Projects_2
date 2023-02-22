@@ -30,7 +30,7 @@ public class CommandUtil {
         pathToNode[1] = path.substring(path.lastIndexOf("/") + 1);
 
         return pathToNode;
-    }
+        }
 
     public static boolean isFile(String name) {
         return Arrays.asList(name.split("\\.")).contains("txt");

@@ -26,22 +26,27 @@ public class FileSystem {
         printWelcome();
         CommandUtil.printLocationPointer(curDir);
 
+        Command command;
         Directory resultDir;
 
-        String[] command = getSplittedCommand(readCommand());
-        while (!command[0].equals("exit")) {
-            if (commands.containsKey(command[0])) {
-                resultDir = commands.get(command[0]).exec(command, mainDir, curDir);
+        String[] request = requestProcessing(readCommand());
 
-                if(resultDir != null) {
+        while (!request[0].equals("exit")) {
+            command = commands.get(request[0]);
+
+            if (command != null) {
+                resultDir = command.exec(request, mainDir, curDir);
+
+                if (resultDir != null) {
                     setCurDir(resultDir);
+
                 }
-            } else {
-                System.out.println("Введите корректную команду");
+            } else if (!request[0].equals("")) {
+                System.out.println("Введена некорректная команда");
             }
 
             CommandUtil.printLocationPointer(curDir);
-            command = getSplittedCommand(readCommand());
+            request = requestProcessing(readCommand());
         }
     }
 
